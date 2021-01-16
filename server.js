@@ -28,7 +28,8 @@ var listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
 
-app.get('/api/timestamp/:date', (req, res) => {
-  const { date } = req.params;
-  res.json({"unix": new Date.now(`${date} GMT`), "utc": ${date}})
+app.get('/api/timestamp/:unix', (req, res) => {
+  const { unix} = req.params;
+  const utc = unix* 1000;
+  res.json("unix": unix, "utc": new Date(utc.toLocaleString()))
 })
