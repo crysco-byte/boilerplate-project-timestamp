@@ -43,7 +43,7 @@ app.get("/api/timestamp/:date", (req, res) => {
       res.json({ unix: dateObject.valueOf(), utc: dateObject.toUTCString() });
     }
   }
-  if (date === "") {
-    res.json({ unix: Date.now(), utc: new Date() });
-  }
+});
+app.get("/api/timestamp", (req, res) => {
+  res.json({ unix: Date.now(), utc: new Date() });
 });
