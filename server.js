@@ -29,6 +29,18 @@ var listener = app.listen(process.env.PORT, function () {
 });
 
 app.get("/api/timestamp/:date", (req, res) => {
-  const utc = req.params.date * 1000;
-  res.json({ unix: req.params.date, utc: new Date(utc).toLocaleString() });
+  let date = req.params.date;
+
+  if (/\d{5,}/.test(dateString)) {
+    const dateInt = parseInt(date);
+    res.json({ unix: dateInt, utc: new Date(dateInt).toUTCString() });
+  } else {
+    let dateObject = new Date(date);
+
+    if (dateObject.toString() === "Invalid Date") {
+      res.json({ error: "Invalid Date" });
+    } else {
+      res.json({ unix: dateObject.valueOf(), utc: dateObject.toUTCString() });
+    }
+  }
 });
